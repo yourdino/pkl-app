@@ -15,12 +15,27 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Middleware group untuk auth, lalu cek role & redirect sesuai role
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
+    \App\Http\Middleware\RedirectBasedOnRole::class,  // tambahkan middleware custom disini
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    
+    // Jika siswa atau guru login, akan diarahkan ke /dashboard oleh middleware
+Route::get('/redirect', function () {
+    $user = auth()->user();
+
+    if ($user->hasRole('admin')) {
+        return redirect('/admin');
+    } elseif ($user->hasRole('guru')) {
+        return redirect('/guru');
+    } elseif ($user->hasRole('siswa')) {
+        return redirect('/siswa');
+    }
+
+    return redirect('/dashboard');
+})->middleware(['auth', 'verified']);
+
 });

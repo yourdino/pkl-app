@@ -26,18 +26,15 @@ class PklResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('siswa_id')
-                    ->label('ID Siswa')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('industri_id')
-                    ->label('ID Industri')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('guru_id')
-                    ->label('ID Guru')
-                    ->required()
-                    ->numeric(),
+                Forms\Components\Select::make('siswa_id')->relationship('siswa', 'nama')
+                    ->label('Siswa')
+                    ->required(),
+                Forms\Components\Select::make('industri_id')->relationship('industri', 'nama')
+                    ->label('Industri')
+                    ->required(),
+                Forms\Components\Select::make('guru_id')->relationship('guru', 'nama')
+                    ->label('Guru')
+                    ->required(),
                 Forms\Components\DatePicker::make('mulai')
                     ->label('Mulai')
                     ->required(),
@@ -50,17 +47,14 @@ class PklResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('siswa_id')
-                    ->label('ID Siswa')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('siswa.nama')
+                    ->label('Siswa')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('industri_id')
-                    ->label('ID Industri')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('industri.nama')
+                    ->label('Industri')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('guru_id')
-                    ->label('ID Guru')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('guru.nama')
+                    ->label('Guru')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('mulai')
                     ->label('Mulai')

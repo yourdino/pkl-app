@@ -18,7 +18,7 @@ class SiswaResource extends Resource
 {
     protected static ?string $model = Siswa::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
+    protected static ?string $navigationIcon = 'heroicon-o-book-open';
 
     protected static ?string $modelLabel = 'Siswa';
     protected static ?string $pluralModelLabel = 'Siswa';
@@ -34,9 +34,13 @@ class SiswaResource extends Resource
                     ->required()
                     ->label('NIS')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('gender')
-                    ->required()
-                    ->maxLength(255),
+                Forms\Components\Select::make('gender')
+                    ->label('Jenis Kelamin')
+                    ->options([
+                        'L' => 'Laki-laki',
+                        'P' => 'Perempuan',
+                    ])
+                    ->required(),
                 Forms\Components\TextInput::make('alamat')
                     ->required()
                     ->maxLength(255),
@@ -51,10 +55,12 @@ class SiswaResource extends Resource
                     ->label('Status PKL')
                     ->required()
                     ->options([
-                        'Belum' => 'Belum PKL',
-                        'Sedang' => 'Sedang PKL',
+                        0 => 'Belum PKL',
+                        1 => 'Sedang PKL',
                     ])                
-                    ->native(false),  
+                    ->native(false)
+                    ->required()
+                    ->searchable(),  
                 FileUpload::make('foto')
                     ->image()
                     ->label('Foto Siswa') 
@@ -77,6 +83,8 @@ class SiswaResource extends Resource
                     ->label('NIS')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('gender')
+                    ->label('Jenis Kelamin')
+                    ->formatStateUsing(fn ($state) => $state === 'L' ? 'Laki-laki' : 'Perempuan')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('alamat')
                     ->searchable(),
@@ -84,16 +92,12 @@ class SiswaResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
-                Tables\Columns\IconColumn::make('status_pkl')
+                Tables\Columns\TextColumn::make('status_pkl')
                     ->label('Status PKL')
-                    ->boolean() // akan otomatis tampil true/false icon (bisa diatur juga)
-                    ->trueIcon('heroicon-o-check-circle')
-                    ->falseIcon('heroicon-o-x-circle')
-                    ->trueColor('success')
-                    ->falseColor('danger')
-                    ->getStateUsing(function ($record) {
-                        return $record->status_pkl === 'Sedang'; // true jika sedang PKL
-                    }),
+                    // ->boolean() // akan otomatis tampil true/false icon (bisa diatur juga)
+                    ->formatStateUsing(fn ($state) => $state ? 'Sedang PKL' : 'Belum PKL')
+                    ->badge()
+                    ->color(fn ($state) => $state ? 'success' : 'gray'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

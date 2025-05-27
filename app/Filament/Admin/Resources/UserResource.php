@@ -17,22 +17,32 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-user';
+
+    protected static ?string $modelLabel = 'User';
+    protected static ?string $pluralModelLabel = 'User';
 
     public static function form(Form $form): Form
     {
 return $form
             ->schema([
-                Forms\Components\TextInput::make('name')->required(),
+                Forms\Components\TextInput::make('name')
+                    ->maxLength(255)
+                    ->required(),
                 Forms\Components\TextInput::make('email')
+                    ->maxLength(255)
                     ->email()
                     ->required(),
+                Forms\Components\DateTimePicker::make('email_verified_at'),
                 Forms\Components\TextInput::make('password')
+                    ->maxLength(255)
                     ->password()
                     ->required(),
                 Forms\Components\Select::make('roles')
+                    ->label('Role')
                     ->relationship('roles', 'name')
-                    ->multiple()
+                    ->preload()
+                    ->searchable()
                     ->required(),
             ]);
     }
@@ -41,11 +51,23 @@ return $form
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')->sortable(),
-                Tables\Columns\TextColumn::make('email')->sortable(),
-                Tables\Columns\TextColumn::make('roles.name')
-                    ->label('Roles')
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('email')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('email_verified_at')
+                    ->dateTime()
                     ->sortable(),
+                Tables\Columns\BadgeColumn::make('roles.name')
+                    ->label('Role'),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
