@@ -70,7 +70,11 @@ class Kernel implements KernelContract
      *
      * @deprecated
      */
-    protected $routeMiddleware = [];
+    protected $routeMiddleware = [
+        'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
+        'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
+        'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
+    ];
 
     /**
      * The application's middleware aliases.
@@ -78,7 +82,8 @@ class Kernel implements KernelContract
      * @var array<string, class-string|string>
      */
     protected $middlewareAliases = [
-        'redirect.role' => \App\Http\Middleware\RedirectBasedOnRole::class,
+        'check_user_email' => \App\Http\Middleware\CheckUserEmail::class,
+        'check_user_role' => \App\Http\Middleware\CheckUserRole::class,
     ];
 
     /**

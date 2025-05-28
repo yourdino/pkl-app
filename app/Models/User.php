@@ -14,6 +14,7 @@ use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
+    use HasRoles;
     use HasApiTokens;
 
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -21,8 +22,9 @@ class User extends Authenticatable
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
-    use HasRoles;
-
+    
+    protected $guard_name = 'web';
+    
     /**
      * The attributes that are mass assignable.
      *
@@ -75,6 +77,12 @@ class User extends Authenticatable
             ->map(fn (string $name) => Str::of($name)->substr(0, 1))
             ->implode('');
     }
+    // User.php
+    public function siswa()
+    {
+        return $this->hasOne(Siswa::class, 'email', 'email');
+    }
+
     // public function roles()
     // {
     //     return $this->belongsToMany(\Spatie\Permission\Models\Role::class, 'model_has_roles', 'model_id', 'role_id')

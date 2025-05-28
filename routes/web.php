@@ -1,41 +1,34 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SiswaController;
-use App\Http\Controllers\GuruController;
-use App\Http\Controllers\IndustriController;
-use App\Http\Controllers\PklController;
-
-Route::resource('siswas', SiswaController::class);
-Route::resource('gurus', GuruController::class);
-Route::resource('industris', IndustriController::class);
-Route::resource('pkls', PklController::class);
+use Illuminate\Support\Facades\DB;
+use App\Livewire\Pkl\Index as PklIndex;
+use App\Livewire\Pkl\Create as PklCreate;
+use App\Livewire\Pkl\Edit as PklEdit;
+use App\Livewire\Pkl\Show as PklShow;
+use App\Livewire\Industri\Index as IndustriIndex;
+use App\Livewire\Industri\Create as IndustriCreate;
+use App\Livewire\Industri\Edit as IndustriEdit;
+use App\Livewire\Industri\Show as IndustriShow;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-// Middleware group untuk auth, lalu cek role & redirect sesuai role
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
-    \App\Http\Middleware\RedirectBasedOnRole::class,  // tambahkan middleware custom disini
+    'role:siswa',
+    'check_user_role',
+    'check_user_email'
 ])->group(function () {
-    
-    // Jika siswa atau guru login, akan diarahkan ke /dashboard oleh middleware
-Route::get('/redirect', function () {
-    $user = auth()->user();
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    if ($user->hasRole('admin')) {
-        return redirect('/admin');
-    } elseif ($user->hasRole('guru')) {
-        return redirect('/guru');
-    } elseif ($user->hasRole('siswa')) {
-        return redirect('/siswa');
-    }
-
-    return redirect('/dashboard');
-})->middleware(['auth', 'verified']);
-
+    Route::get('/pkl', PklIndex::class)->name('pkl.index');
+    Route::get('/pkl/create', PklCreate::class)->name('pkl.create');
+    Route::get('/industri', IndustriIndex::class)->name('industri.index');
+    Route::get('/industri/create', IndustriCreate::class)->name('industri.create');
 });
