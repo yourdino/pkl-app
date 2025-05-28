@@ -18,8 +18,6 @@ return new class extends Migration
             $table->string('alamat');
             $table->string('kontak');
             $table->string('email');
-            $table->unsignedBigInteger('guru_pembimbing');
-            $table->foreign('guru_pembimbing')->references('id')->on('gurus')->onDelete('cascade');
             $table->timestamps();
         });
     }

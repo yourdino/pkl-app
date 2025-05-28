@@ -13,7 +13,6 @@ class Create extends Component
     public $alamat;
     public $kontak;
     public $email;
-    public $website;
 
     public function store()
     {
@@ -23,7 +22,6 @@ class Create extends Component
             'alamat' => 'required|string',
             'kontak' => 'required|string|max:20',
             'email' => 'required|email|max:100',
-            'website' => 'required|url|max:255',
         ]);
 
         Industri::create([
@@ -32,7 +30,6 @@ class Create extends Component
             'alamat' => $this->alamat,
             'kontak' => $this->kontak,
             'email' => $this->email,
-            'website' => $this->website,
         ]);
 
         session()->flash('success', 'Data industri berhasil ditambahkan!');

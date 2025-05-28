@@ -22,8 +22,7 @@ class Index extends Component
                 ->orWhere('bidang_usaha', 'like', '%' . $this->search . '%')
                 ->orWhere('alamat', 'like', '%' . $this->search . '%')
                 ->orWhere('kontak', 'like', '%' . $this->search . '%')
-                ->orWhere('email', 'like', '%' . $this->search . '%')
-                ->orWhere('website', 'like', '%' . $this->search . '%');
+                ->orWhere('email', 'like', '%' . $this->search . '%');
             });
         }
 

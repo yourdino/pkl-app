@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class industri extends Model
 {
-    protected $fillable = ['nama', 'bidang_usaha', 'alamat', 'kontak', 'email', 'guru_pembimbing'];
+    protected $fillable = ['nama', 'bidang_usaha', 'alamat', 'kontak', 'email'];
 
     use HasFactory;
     

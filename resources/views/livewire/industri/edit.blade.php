@@ -38,16 +38,6 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-1 gap-4 mb-4">
-                    <!-- Website -->
-                    <div>
-                        <label for="website" class="block text-sm font-medium text-gray-700">Website</label>
-                        <input type="url" wire:model="website" id="website" 
-                            class="w-full mt-1 text-sm border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-200" />
-                        @error('website') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                    </div>
-                </div>
-
                 <div class="grid grid-cols-1 gap-4 mb-4">
                     <!-- Alamat -->
                     <div>

@@ -44,7 +44,7 @@ class Create extends Component
 
             if ($exists) {
                 DB::rollBack(); // batalkan transaksi
-                session()->flash('error', 'Gagal lapor! Siswa ini sudah melakukan lapor PKL');
+                session()->flash('error', 'Tidak bisa! Siswa sudah melakukan lapor PKL.');
                 return redirect()->route('pkl.index');
             }
 

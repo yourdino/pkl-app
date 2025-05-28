@@ -3,8 +3,8 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
                 <h1 class="text-2xl font-bold mb-6">
-                    Selamat datang <span style="color:rgb(240, 100, 159);">
-                        {{ Auth::user()->currentTeam->name ?? Auth::user()->name }}
+                    Selamat datang <span style="color:rgb(147, 164, 240);">
+                        {{ Auth::user()->currentTeam->name ?? Auth::user()->name}}
                     </span>!
                 </h1>
 
@@ -41,7 +41,7 @@
                                     <p class="text-base"><strong>Industri :</strong> {{ $pkl->industri->nama ?? '-' }}</p>
                                     <p class="text-base"><strong>Guru Pembimbing :</strong> {{ $pkl->guru->nama ?? '-' }}</p>
 
-                                    @php
+                                    <!-- @php
                                         $mulai = \Carbon\Carbon::parse($pkl->mulai);
                                         $selesai = \Carbon\Carbon::parse($pkl->selesai);
                                         $sekarang = \Carbon\Carbon::now();
@@ -49,20 +49,20 @@
                                         $totalHari = $mulai->diffInDays($selesai);
                                         $hariBerjalan = $mulai->diffInDays(min($sekarang, $selesai));
                                         $persentase = $totalHari > 0 ? round(($hariBerjalan / $totalHari) * 100) : 0;
-                                    @endphp
+                                    @endphp -->
 
-                                    <div class="mt-2">
-                                        <p class="text-base mb-1">Progress PKL</p>
+                                    <!-- <div class="mt-2"> -->
+                                        <!-- <p class="text-base mb-1">Progress PKL</p>
                                         <div class="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
                                             <div
                                                 class="h-3 rounded-full"
                                                 style="width: {{ $persentase }}%;
-                                                       background: linear-gradient(90deg,rgb(209, 78, 144),rgb(241, 130, 186));
+                                                       background: linear-gradient(90deg,rgb(147, 164, 240),rgb(191, 200, 240));
                                                        animation: progressBarAnimation 2s ease forwards;">
                                             </div>
                                         </div>
                                         <p class="text-xs text-right mt-1">{{ $persentase }}%</p>
-                                    </div>
+                                    </div>-->
                                 </div>
                             @empty
                                 <p class="text-lg">Data PKL belum tersedia.</p>
@@ -71,8 +71,8 @@
 
                         <!-- Kolom 4: Aksi -->
                         <div>
-                            <h2 class="text-lg font-semibold mb-3 text-pink-600">Tambah Data & Lapor PKL</h2>
-                            <p class="mb-4 text-pink-500">Tambah data industri dan laporan PKL kamu dengan mudah</p>
+                            <h2 class="text-lg font-semibold mb-3 text-pink-600">Data Industri & PKL</h2>
+                            <p class="mb-4 text-pink-500">Tambah data industri dan laporan PKL, easy!</p>
 
                             <button type="button"
                                 onclick="window.location='{{ route('industri.index') }}';"

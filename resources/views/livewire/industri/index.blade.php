@@ -39,7 +39,6 @@
                             <th scope="col" class="px-6 py-3">Alamat</th>
                             <th scope="col" class="px-6 py-3">Kontak</th>
                             <th scope="col" class="px-6 py-3">Email</th>
-                            <th scope="col" class="px-6 py-3">Website</th>
                             <!-- <th scope="col" class="px-6 py-3">Aksi</th> -->
                         </tr>
                     </thead>
@@ -70,9 +69,6 @@
                             </td>
                             <td class="px-6 py-4">
                                 {{ $industri->email }}
-                            </td>
-                            <td class="px-6 py-4">
-                                <a href="{{ $industri->website }}" class="text-blue-600" target="_blank">{{ $industri->website }}</a>
                             </td>
                             <!-- <td class="px-6 py-4">
                                 <a href="" class="text-blue-500 hover:bg-blue-100 hover:text-blue-700 inline-flex items-center px-3 py-2 rounded-md">

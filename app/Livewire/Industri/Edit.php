@@ -13,7 +13,6 @@ class Edit extends Component
     public $alamat;
     public $kontak;
     public $email;
-    public $website;
 
     public function mount($id)
     {
@@ -27,7 +26,6 @@ class Edit extends Component
         $this->alamat = $industri->alamat;
         $this->kontak = $industri->kontak;
         $this->email = $industri->email;
-        $this->website = $industri->website;
     }
 
     public function update()
@@ -39,7 +37,6 @@ class Edit extends Component
             'alamat' => 'required|string',
             'kontak' => 'required|string|max:20',
             'email' => 'required|email|max:100',
-            'website' => 'required|url|max:255',
         ]);
 
         // Find and update the industri record
@@ -50,7 +47,6 @@ class Edit extends Component
             'alamat' => $this->alamat,
             'kontak' => $this->kontak,
             'email' => $this->email,
-            'website' => $this->website,
         ]);
 
         // Flash success message and redirect

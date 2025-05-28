@@ -43,15 +43,6 @@
                         <p class="text-sm text-gray-600">{{ $industri->email }}</p>
                     </div>
 
-                    <!-- Website -->
-                    <div>
-                        <p class="font-medium text-sm text-gray-700">Website</p>
-                        <p class="text-sm text-gray-600">
-                            <a href="{{ $industri->website }}" target="_blank" class="text-blue-500 hover:underline">
-                                {{ $industri->website }}
-                            </a>
-                        </p>
-                    </div>
                 </div>
 
                 <!-- Button to go back -->
