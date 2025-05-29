@@ -2,42 +2,53 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Industri;
 use Illuminate\Http\Request;
+use App\Models\Industri; // mengarah ke model industri
 
 class IndustriController extends Controller
 {
-    public function index()
-    {
-        $industris = Industri::all();
-        return view('industris.index', compact('industris'));
-    }
+	public function index()
+	{
+		$siswa = Industri::get();
+		return response()->json($siswa, 200);
+	}
 
-    public function create()
-    {
-        return view('industris.create');
-    }
+	public function store(Request $request)
+	{
+		$industri = new Industri();
+		$industri->nama = $request->nama;
+		$industri->bidang_usaha = $request->bidang_usaha;
+		$industri->alamat = $request->alamat;
+		$industri->kontak = $request->kontak;
+		$industri->email = $request->email;
+		$industri->save();
+		return response()->json($industri, 200);
+	}
 
-    public function store(Request $request)
-    {
-        Industri::create($request->all());
-        return redirect()->route('industris.index')->with('success', 'Data industri berhasil ditambahkan.');
-    }
+	public function update(Request $request, string $id)
+	{
+		$industri = Industri::find($id);
+		$industri->nama = $request->nama;
+		$industri->bidang_usaha = $request->bidang_usaha;
+		$industri->alamat = $request->alamat;
+		$industri->kontak = $request->kontak;
+		$industri->email = $request->email;
+		$industri->save();
+		return response()->json($industri, 200);
+	}
 
-    public function edit(Industri $industri)
-    {
-        return view('industris.edit', compact('industri'));
-    }
+	public function destroy(string $id)
+	{
+		Siswa::destroy($id);
+		return response()->json(["message"=>"Deleted"], 200);
+	}
 
-    public function update(Request $request, Industri $industri)
+    public function show(string $id)
     {
-        $industri->update($request->all());
-        return redirect()->route('industris.index')->with('success', 'Data industri berhasil diperbarui.');
-    }
-
-    public function destroy(Industri $industri)
-    {
-        $industri->delete();
-        return redirect()->route('industris.index')->with('success', 'Data industri berhasil dihapus.');
+        $industri = Industri::find($id);
+        if (!$industri) {
+            return response()->json(["message" => 'Data industri tidak ditemukan'], 404);
+        }
+        return response()->json($industri, 200);
     }
 }

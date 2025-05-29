@@ -2,42 +2,53 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pkl;
 use Illuminate\Http\Request;
+use App\Models\Pkl; // mengarah ke model pkl
 
 class PklController extends Controller
 {
-    public function index()
-    {
-        $pkls = Pkl::all();
-        return view('pkls.index', compact('pkls'));
-    }
+	public function index()
+	{
+		$siswa = Pkl::get();
+		return response()->json($siswa, 200);
+	}
 
-    public function create()
-    {
-        return view('pkls.create');
-    }
+	public function store(Request $request)
+	{
+		$pkl = new Pkl();
+		$pkl->siswa_id = $request->siswa_id;
+		$pkl->guru_id = $request->guru_id;
+		$pkl->industri_id = $request->industri_id;
+		$pkl->mulai = $request->mulai;
+		$pkl->selesai = $request->selesai;
+		$pkl->save();
+		return response()->json($pkl, 200);
+	}
 
-    public function store(Request $request)
-    {
-        Pkl::create($request->all());
-        return redirect()->route('pkls.index')->with('success', 'Data PKL berhasil ditambahkan.');
-    }
+	public function update(Request $request, string $id)
+	{
+		$pkl = Pkl::find($id);
+		$pkl->siswa_id = $request->siswa_id;
+		$pkl->guru_id = $request->guru_id;
+		$pkl->industri_id = $request->industri_id;
+		$pkl->mulai = $request->mulai;
+		$pkl->selesai = $request->selesai;
+		$pkl->save();
+		return response()->json($pkl, 200);
+	}
 
-    public function edit(Pkl $pkl)
-    {
-        return view('pkls.edit', compact('pkl'));
-    }
+	public function destroy(string $id)
+	{
+		Pkl::destroy($id);
+		return response()->json(["message"=>"Deleted"], 200);
+	}
 
-    public function update(Request $request, Pkl $pkl)
+    public function show(string $id)
     {
-        $pkl->update($request->all());
-        return redirect()->route('pkls.index')->with('success', 'Data PKL berhasil diperbarui.');
-    }
-
-    public function destroy(Pkl $pkl)
-    {
-        $pkl->delete();
-        return redirect()->route('pkls.index')->with('success', 'Data PKL berhasil dihapus.');
+        $pkl = Pkl::find($id);
+        if (!$pkl) {
+            return response()->json(["message" => 'Data pkl tidak ditemukan'], 404);
+        }
+        return response()->json($pkl, 200);
     }
 }
